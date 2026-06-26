@@ -23,7 +23,10 @@ function Feed() {
 }, [selectedCategory]);
 
   return (
-    <Box sx={{ display: "flex",minHeight: "100vh", }}>
+    <Box sx={{ 
+    display: "flex",
+    background:"#f9f9f9",
+    minHeight: "100vh", }}>
       <Sidebar
   selectedCategory={selectedCategory}
   setSelectedCategory={setSelectedCategory}
