@@ -18,7 +18,7 @@ function Navbar() {
     color: "white",
   }}
 >
-  YouTube clone
+  YouTube
 </Typography>
 
         <Box sx={{ flexGrow: 1 }} />
