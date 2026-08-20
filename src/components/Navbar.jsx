@@ -1,75 +1,25 @@
-import { AppBar, Toolbar, Typography, Box, InputBase } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
+import { Link } from "react-router-dom";
+import { MonitorPlay } from "lucide-react";
+import SearchBar from "./Searchbar";
 
 function Navbar() {
   return (
-    <AppBar
-      position="sticky"
-      sx={{
-        bgcolor: "white",
-        color: "black",
-        boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
-      }}
-    >
-      <Toolbar sx={{ justifyContent: "space-between" }}>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-          }}
-        >
-          <SmartDisplayIcon
-            sx={{
-              color: "#ff0000",
-              fontSize: 42,
-            }}
-          />
-
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: "bold",
-              color: "black",
-            }}
-          >
+    <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-background/80 border-b border-border/40 shadow-sm supports-[backdrop-filter]:bg-background/60 transition-colors">
+      <div className="flex h-16 items-center justify-between px-4 md:px-8">
+        <Link to="/" className="flex items-center gap-2 group">
+          <div className="p-2 bg-red-600 rounded-xl group-hover:scale-105 group-active:scale-95 transition-transform">
+            <MonitorPlay className="w-6 h-6 text-white" />
+          </div>
+          <span className="font-bold text-xl tracking-tight hidden sm:block bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
             YouTube
-          </Typography>
-        </Box>
-
-        <Box
-          sx={{
-            display: "flex",
-            width: "45%",
-            border: "1px solid #ccc",
-            borderRadius: "30px",
-            overflow: "hidden",
-          }}
-        >
-          <InputBase
-            placeholder="Search"
-            sx={{
-              flex: 1,
-              px: 2,
-            }}
-          />
-
-          <Box
-            sx={{
-              width: 60,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              bgcolor: "#f8f8f8",
-              cursor: "pointer",
-            }}
-          >
-            <SearchIcon />
-          </Box>
-        </Box>
-      </Toolbar>
-    </AppBar>
+          </span>
+        </Link>
+        
+        <div className="flex-1 max-w-2xl px-4 flex justify-end md:justify-center">
+          <SearchBar />
+        </div>
+      </div>
+    </header>
   );
 }
 

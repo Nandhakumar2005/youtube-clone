@@ -1,51 +1,49 @@
-import { Box, Button } from "@mui/material";
+import { motion } from "framer-motion";
 import { categories } from "../utils/categories";
+import { cn } from "@/utils/cn";
 
 function Sidebar({ selectedCategory, setSelectedCategory }) {
   return (
-    <Box
-      sx={{
-        width: "220px",
-        p: 2,
-        bgcolor: "#ffffff",
-        borderRight: "1px solid #e5e5e5",
-        minHeight: "100vh",
-      }}
-    >
-      {categories.map((category) => (
-        <Button
-          key={category.name}
-          fullWidth
-          onClick={() => setSelectedCategory(category.name)}
-          sx={{
-            justifyContent: "flex-start",
-            mb: 1,
-            px: 2,
-            py: 1.2,
-            borderRadius: "10px",
-            fontWeight: 500,
-            textTransform: "none",
-            color:
-              selectedCategory === category.name
-                ? "#ffffff"
-                : "#0f0f0f",
-            bgcolor:
-              selectedCategory === category.name
-                ? "#ff0000"
-                : "transparent",
+    <aside className="w-full md:w-[240px] md:min-h-screen bg-background/50 backdrop-blur-sm border-r border-border/40 p-3 flex md:flex-col overflow-y-auto hidden-scrollbar gap-2 z-10 sticky top-16">
+      {categories.map((category) => {
+        const isActive = selectedCategory === category.name;
 
-            "&:hover": {
-              bgcolor:
-                selectedCategory === category.name
-                  ? "#cc0000"
-                  : "#f2f2f2",
-            },
-          }}
-        >
-          {category.name}
-        </Button>
-      ))}
-    </Box>
+        return (
+          <button
+            key={category.name}
+            onClick={() => setSelectedCategory(category.name)}
+            className={cn(
+              "relative px-4 py-3 rounded-xl flex items-center gap-3 transition-colors text-left flex-shrink-0 md:flex-shrink",
+              "hover:bg-secondary/80 focus:outline-none",
+              isActive ? "text-primary-foreground" : "text-foreground"
+            )}
+          >
+            {isActive && (
+              <motion.div
+                layoutId="sidebar-active-indicator"
+                className="absolute inset-0 bg-primary rounded-xl -z-10 shadow-md shadow-primary/20"
+                initial={false}
+                transition={{
+                  type: "spring",
+                  stiffness: 500,
+                  damping: 30,
+                }}
+              />
+            )}
+            
+            {category.icon && (
+              <category.icon
+                className={cn(
+                  "w-5 h-5 transition-colors",
+                  isActive ? "text-primary-foreground" : "text-primary"
+                )}
+              />
+            )}
+            <span className="font-medium whitespace-nowrap">{category.name}</span>
+          </button>
+        );
+      })}
+    </aside>
   );
 }
 

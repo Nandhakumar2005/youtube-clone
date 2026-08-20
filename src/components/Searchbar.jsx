@@ -1,75 +1,43 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  TextField,
-  IconButton,
-  Box,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import { Search } from "lucide-react";
+import { cn } from "@/utils/cn";
 
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e?.preventDefault();
     if (searchTerm.trim()) {
       navigate(`/search/${searchTerm}`);
     }
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        width: {
-          xs: "100%",
-          sm: "450px",
-          md: "550px",
-        },
-      }}
+    <form
+      onSubmit={handleSubmit}
+      className={cn(
+        "flex items-center w-full max-w-md",
+        "relative rounded-full overflow-hidden",
+        "bg-secondary/50 backdrop-blur-md border border-border/50",
+        "focus-within:ring-2 focus-within:ring-primary/50 transition-all duration-300"
+      )}
     >
-      <TextField
-        fullWidth
-        size="small"
-        placeholder="Search"
+      <input
+        type="text"
+        placeholder="Search..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleSubmit();
-          }
-        }}
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            borderTopLeftRadius: "30px",
-            borderBottomLeftRadius: "30px",
-            borderTopRightRadius: 0,
-            borderBottomRightRadius: 0,
-            backgroundColor: "#fff",
-          },
-        }}
+        className="w-full bg-transparent px-6 py-2 outline-none text-foreground placeholder:text-muted-foreground"
       />
-
-      <IconButton
-        onClick={handleSubmit}
-        sx={{
-          width: 65,
-          height: 40,
-          border: "1px solid #ccc",
-          borderLeft: "none",
-          borderTopRightRadius: "30px",
-          borderBottomRightRadius: "30px",
-          backgroundColor: "#f8f8f8",
-
-          "&:hover": {
-            backgroundColor: "#ececec",
-          },
-        }}
+      <button
+        type="submit"
+        className="px-4 py-2 bg-secondary/80 hover:bg-secondary transition-colors border-l border-border/50 h-full flex items-center justify-center"
       >
-        <SearchIcon />
-      </IconButton>
-    </Box>
+        <Search className="w-5 h-5 text-muted-foreground" />
+      </button>
+    </form>
   );
 }
 

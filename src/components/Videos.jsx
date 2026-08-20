@@ -1,21 +1,18 @@
-import { Box } from "@mui/material";
 import VideoCard from "./VideoCard";
+import ChannelCard from "./ChannelCard";
 
-function Videos({ videos }) {
+function Videos({ videos, direction }) {
+  if (!videos?.length) return <div>Loading...</div>;
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexWrap: "wrap",
-        gap: 2,
-      }}
-    >
-      {videos
-  ?.filter((video) => video.id?.videoId)
-  .map((video) => (
-    <VideoCard key={video.id.videoId} video={video} />
-  ))}
-    </Box>
+    <div className={`grid gap-4 md:gap-6 ${direction === "column" ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"} w-full`}>
+      {videos.map((item, idx) => (
+        <div key={idx}>
+          {item.id.videoId && <VideoCard video={item} />}
+          {item.id.channelId && <ChannelCard channelDetail={item} />}
+        </div>
+      ))}
+    </div>
   );
 }
 
